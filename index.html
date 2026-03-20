@@ -3,133 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MicroBiz OS | Smart Retail Management</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>MicroBiz OS | The Future of Kirana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
-            --primary: #00ff88; 
-            --bg-dark: #0d0e12; 
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --text-main: #ffffff;
-            --text-dim: #a0a0a0;
-            --accent-gradient: linear-gradient(45deg, #00ff88, #00bd68);
+            --primary: #00ff88;
+            --primary-glow: rgba(0, 255, 136, 0.4);
+            --bg: #050505;
+            --surface: #111111;
+            --text: #ffffff;
+            --text-dim: #94a3b8;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s ease; }
-        body { background-color: var(--bg-dark); color: var(--text-main); line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        .lang-switch {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: var(--primary);
-            color: #000;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 700;
+        /* Animated Mesh Gradient Background */
+        .bg-mesh {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(at 0% 0%, rgba(0, 255, 136, 0.15) 0px, transparent 50%),
+                        radial-gradient(at 100% 100%, rgba(0, 255, 136, 0.1) 0px, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Lang Switcher */
+        .nav-bar { padding: 25px 5%; display: flex; justify-content: space-between; align-items: center; }
+        .lang-toggle {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 20px;
+            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+            font-weight: 700;
+            transition: 0.3s;
         }
+        .lang-toggle:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary-glow); }
 
-        .hero { padding: 120px 20px 60px; text-align: center; }
-        h1 { font-size: clamp(2.2rem, 7vw, 3.5rem); margin-bottom: 20px; color: var(--primary); }
-        .subtext { font-size: 1.1rem; color: var(--text-dim); max-width: 650px; margin: 0 auto 40px; }
+        /* Hero */
+        .hero { height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px; }
+        .badge { background: rgba(0,255,136,0.1); color: var(--primary); padding: 8px 16px; border-radius: 100px; font-weight: 700; font-size: 0.8rem; margin-bottom: 20px; border: 1px solid var(--primary); }
+        h1 { font-size: clamp(2.8rem, 10vw, 5rem); font-weight: 800; line-height: 0.9; margin-bottom: 25px; letter-spacing: -3px; }
+        .highlight { color: var(--primary); text-shadow: 0 0 30px var(--primary-glow); }
 
-        .cta-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 16px 32px; border-radius: 12px; text-decoration: none; font-weight: 700; display: inline-block; text-transform: uppercase; text-align: center; }
-        .btn-primary { background: var(--accent-gradient); color: #000; }
-        .btn-secondary { border: 1px solid var(--primary); color: var(--primary); }
+        /* Live Billing Counter Simulation */
+        .billing-demo {
+            background: var(--surface);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin: 40px 0;
+            width: 100%; max-width: 400px;
+            text-align: left;
+        }
+        .demo-line { height: 10px; background: #222; border-radius: 5px; margin-bottom: 10px; width: 80%; overflow: hidden; position: relative; }
+        .demo-line::after { content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 50%; background: var(--primary); animation: progress 2s infinite; }
+        @keyframes progress { 0% { left: -50%; } 100% { left: 100%; } }
 
-        section { padding: 60px 20px; max-width: 1100px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .card { background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .card h3 { color: var(--primary); margin-bottom: 10px; }
+        /* Features */
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 100px 5%; }
+        .card { 
+            background: linear-gradient(145deg, #111, #080808); 
+            padding: 40px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.05);
+            transition: 0.5s; position: relative; overflow: hidden;
+        }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .card i { color: var(--primary); margin-bottom: 20px; display: block; }
 
-        footer { text-align: center; padding: 80px 20px; background: rgba(0,0,0,0.5); border-top: 1px solid rgba(255, 255, 255, 0.05); }
-        .contact-box { margin-top: 30px; padding: 20px; background: rgba(255, 255, 255, 0.03); border-radius: 15px; display: inline-block; min-width: 300px; }
-        .email-link { display: block; margin-top: 10px; color: var(--primary); text-decoration: none; font-weight: 500; font-size: 1.1rem; }
-        .email-link:hover { text-decoration: underline; }
-        
-        @media (max-width: 600px) { .btn { width: 100%; } .contact-box { width: 100%; } }
+        /* CTA */
+        .cta-group { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+        .btn { padding: 20px 40px; border-radius: 100px; text-decoration: none; font-weight: 800; transition: 0.3s; font-size: 1.1rem; }
+        .btn-glow { background: var(--primary); color: #000; box-shadow: 0 10px 40px var(--primary-glow); }
+        .btn-outline { border: 2px solid rgba(255,255,255,0.1); color: #fff; }
+        .btn:hover { scale: 1.05; }
+
+        /* Footer */
+        footer { padding: 100px 20px; text-align: center; background: #000; }
+        .contact-pill { display: inline-flex; align-items: center; gap: 10px; background: #111; padding: 15px 30px; border-radius: 50px; border: 1px solid #222; text-decoration: none; color: #fff; margin-top: 20px; }
+
+        @media (max-width: 768px) { h1 { font-size: 3.2rem; } .cta-group .btn { width: 100%; } }
     </style>
 </head>
 <body>
 
-    <button class="lang-switch" onclick="toggleLang()" id="langBtn">हिन्दी में देखें</button>
+    <div class="bg-mesh"></div>
+
+    <nav class="nav-bar">
+        <div style="font-weight: 800; font-size: 1.4rem;">MICROBIZ <span style="color:var(--primary)">OS</span></div>
+        <button class="lang-toggle" onclick="toggleLang()" id="langBtn">हिन्दी में देखें</button>
+    </nav>
 
     <header class="hero">
-        <h1 data-en="Track Your Shop Sales & Stock in Seconds" 
-            data-hi="अपनी दुकान की बिक्री और स्टॉक को सेकंडों में ट्रैक करें">
-            Track Your Shop Sales & Stock in Seconds
+        <div class="badge" data-en="Next-Gen Retail" data-hi="अगली पीढ़ी का रिटेल">Next-Gen Retail</div>
+        <h1 data-en="Run Your Shop on <span class='highlight'>Autopilot</span>" 
+            data-hi="अपनी दुकान चलाएं <span class='highlight'>ऑटोपायलट</span> पर">
+            Run Your Shop on <span class="highlight">Autopilot</span>
         </h1>
-        <p class="subtext" 
-           data-en="Simple app for kirana stores to manage billing, inventory, and daily profit."
-           data-hi="किराना स्टोर के लिए बिलिंग, इन्वेंट्री और दैनिक लाभ मैनेज करने के लिए सबसे आसान ऐप।">
-           Simple app for kirana stores to manage billing, inventory, and daily profit.
+        <p style="color:var(--text-dim); max-width: 600px; margin-bottom: 40px; font-size: 1.2rem;" 
+           data-en="The fastest billing and stock management app for local Indian merchants."
+           data-hi="भारतीय व्यापारियों के लिए सबसे तेज़ बिलिंग और स्टॉक मैनेजमेंट ऐप।">
+           The fastest billing and stock management app for local Indian merchants.
         </p>
-        <div class="cta-container">
-            <a href="https://micro-biz-os--siddharthver954.replit.app/" class="btn btn-primary" data-en="Start Free Trial" data-hi="फ्री ट्रायल शुरू करें">Start Free Trial</a>
-            <a href="https://wa.me/919634051292" class="btn btn-secondary" data-en="WhatsApp Us" data-hi="व्हाट्सएप करें">WhatsApp Us</a>
+
+        <div class="cta-group">
+            <a href="https://micro-biz-os--siddharthver954.replit.app/" class="btn btn-glow" data-en="Launch Free App" data-hi="फ्री ऐप लॉन्च करें">Launch Free App</a>
+            <a href="https://wa.me/919634051292" class="btn btn-outline" data-en="Chat with Siddharth" data-hi="सिद्धार्थ से बात करें">Chat with Siddharth</a>
+        </div>
+
+        <div class="billing-demo">
+            <div style="font-size: 0.8rem; margin-bottom: 15px; color: var(--primary);" data-en="DEMO: GENERATING BILL..." data-hi="डेमो: बिल बन रहा है...">DEMO: GENERATING BILL...</div>
+            <div class="demo-line" style="width: 90%;"></div>
+            <div class="demo-line" style="width: 60%;"></div>
+            <div class="demo-line" style="width: 40%;"></div>
         </div>
     </header>
 
-    <section>
-        <div class="grid">
-            <div class="card">
-                <h3 data-en="Digital Khata" data-hi="डिजिटल खाता">Digital Khata</h3>
-                <p data-en="Manage Udhaari and daily transactions safely." 
-                   data-hi="उधारी और दैनिक लेनदेन को सुरक्षित रूप से मैनेज करें।">
-                   Manage Udhaari and daily transactions safely.
-                </p>
-            </div>
-            <div class="card">
-                <h3 data-en="Auto Stock Updates" data-hi="ऑटो स्टॉक अपडेट">Auto Stock Updates</h3>
-                <p data-en="App tracks your inventory as you sell items." 
-                   data-hi="जैसे ही आप सामान बेचते हैं, ऐप आपके स्टॉक को ट्रैक करता है।">
-                   App tracks your inventory as you sell items.
-                </p>
-            </div>
-            <div class="card">
-                <h3 data-en="Real-time Profit" data-hi="रियल-टाइम लाभ">Real-time Profit</h3>
-                <p data-en="Know exactly how much money you made today." 
-                   data-hi="सटीक रूप से जानें कि आपने आज कितना पैसा कमाया।">
-                   Know exactly how much money you made today.
-                </p>
-            </div>
+    <section class="features-grid">
+        <div class="card">
+            <i data-lucide="zap" size="40"></i>
+            <h3 data-en="10s Billing" data-hi="10 सेकंड बिलिंग">10s Billing</h3>
+            <p data-en="No more lines. Create professional bills instantly on your phone." data-hi="कोई लाइन नहीं। अपने फोन पर तुरंत प्रोफेशनल बिल बनाएं।">No more lines. Create professional bills instantly on your phone.</p>
+        </div>
+        <div class="card">
+            <i data-lucide="bar-chart-3" size="40"></i>
+            <h3 data-en="Profit Tracking" data-hi="मुनाफा ट्रैकिंग">Profit Tracking</h3>
+            <p data-en="Calculate your 'Kamai' (earning) automatically at the end of every day." data-hi="हर दिन के अंत में अपनी 'कमाई' की गणना स्वचालित रूप से करें।">Calculate your 'Kamai' automatically at the end of every day.</p>
+        </div>
+        <div class="card">
+            <i data-lucide="package" size="40"></i>
+            <h3 data-en="Smart Stock" data-hi="स्मार्ट स्टॉक">Smart Stock</h3>
+            <p data-en="Get alerts on WhatsApp when your stock is low. Never go out of stock." data-hi="स्टॉक कम होने पर व्हाट्सएप पर अलर्ट पाएं। स्टॉक कभी खत्म नहीं होगा।">Get alerts on WhatsApp when your stock is low.</p>
         </div>
     </section>
 
     <footer>
-        <h2 data-en="Get in Touch" data-hi="संपर्क करें">Get in Touch</h2>
-        <div class="contact-box">
-            <p data-en="Questions? Send us an email:" data-hi="कोई सवाल? हमें ईमेल भेजें:">Questions? Send us an email:</p>
-            <a href="mailto:siddharthver954@gmail.com" class="email-link">siddharthver954@gmail.com</a>
-        </div>
-        <div style="margin-top: 40px;">
-            <a href="https://micro-biz-os--siddharthver954.replit.app/" class="btn btn-primary" data-en="Launch MicroBiz OS" data-hi="ऐप लॉन्च करें">Launch MicroBiz OS</a>
-        </div>
+        <h2 data-en="Stop Using Pens. Start Using OS." data-hi="पेन छोड़ें। OS अपनाएं।">Stop Using Pens. Start Using OS.</h2>
+        <a href="mailto:siddharthver954@gmail.com" class="contact-pill">
+            <i data-lucide="mail"></i>
+            <span>siddharthver954@gmail.com</span>
+        </a>
+        <p style="margin-top: 30px; color: var(--text-dim); font-size: 0.9rem;">Built with ❤️ for Indian Merchants</p>
     </footer>
 
     <script>
-        let currentLang = 'en';
+        // Initialize Icons
+        lucide.createIcons();
 
+        // Language Logic
+        let currentLang = 'en';
         function toggleLang() {
             const elements = document.querySelectorAll('[data-en]');
             const btn = document.getElementById('langBtn');
-            
             if (currentLang === 'en') {
                 elements.forEach(el => {
-                    const hiText = el.getAttribute('data-hi');
-                    if(hiText) el.innerText = hiText;
+                    if (el.tagName === 'H1') el.innerHTML = el.getAttribute('data-hi');
+                    else el.innerText = el.getAttribute('data-hi');
                 });
                 btn.innerText = "View in English";
                 currentLang = 'hi';
             } else {
                 elements.forEach(el => {
-                    const enText = el.getAttribute('data-en');
-                    if(enText) el.innerText = enText;
+                    if (el.tagName === 'H1') el.innerHTML = el.getAttribute('data-en');
+                    else el.innerText = el.getAttribute('data-en');
                 });
                 btn.innerText = "हिन्दी में देखें";
                 currentLang = 'en';
@@ -137,3 +173,4 @@
         }
     </script>
 </body>
+</html>
